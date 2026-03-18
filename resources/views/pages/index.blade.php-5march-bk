@@ -1,0 +1,353 @@
+@extends('layout.default')
+@if(isset($inner_page->id))
+@section('title',strip_tags($inner_page->seo_title))
+@section('description',strip_tags($inner_page->seo_description))
+@section('keywords',strip_tags($inner_page->seo_keyword))
+@section('robots',strip_tags($inner_page->robot_tags))
+@endif
+@section('content')
+
+@php
+$siteUrl = env('APP_URL');
+$page_url = request()->route()->getName();
+@endphp
+{!! $inner_page->canonical_tags !!}
+{!! $inner_page->schema_tags !!}
+<style>
+	.college-show{
+		display: flex!important;
+	}
+	th {
+    color: #000;
+}
+td {
+    color: #000;
+}
+</style>
+
+<div class="hero-section">  
+   <div class="container">
+     <div class="row hero-banner-content align-items-center">
+        <div class="col-lg-6 wow fadeInLeft">
+        
+         	<div class="left-content">
+            @if(isset($inner_page->id))
+                <div class="badge">{!! $inner_page->title !!}</div>
+                <h1 class="mb-4 mt-4"> {!! $inner_page->heading !!} <span class="orange-text">{!! $inner_page->sub_heading !!}</span></h1>
+                <p class="mb-5">{!! $inner_page->description !!}</p>    
+                <a href="{{route('pages.predictors')}}" class="btn btn-primary cta-button">Use College Predictor</a>
+            @endif
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 wow fadeInRight">
+        
+           @include('element.contact_us')
+           
+        </div>
+     </div>
+   </div>
+</div>
+@php
+    $collegePages = getCollegePages();
+    $videos = getVideos();
+@endphp
+<div class="top-ranked-colleges py-100 pt-0 wow fadeInUp">
+   <div class="container">
+        <div class="title-seciton text-center py-3 py-lg-5 wow fadeInUp">
+            <h2 class="mb-3">Most Popular Countries for MBBS</h2>
+            <div class="taketo-first">
+                <p class="text-center col-md-10 mx-auto">With AMW Career Point you can get MBBS Admission in renowned Medical Universities Worldwide</div>
+         </div>
+
+         <div class="step-today-section wow fadeInUp">
+            <!-- Tabs -->
+            
+
+            <!-- Government-College Cards -->
+            <div id="college-list" class="show row g-4 college-show">
+               @foreach($collegePages as $key => $collegePage)
+               <div class="col-md-4">
+                  <div class="college-card h-100">
+                     <div class="d-flex justify-content-between align-items-center">
+                        <img src="https://amwcareerpoint.com/public/admin/images/banners/{{$collegePage->image}}" style="width: 100%;
+    height: 100%;" alt="college logo">
+                        <div>
+                        
+                        </div>
+                     </div>
+                     <h5 class="mt-3">{{$collegePage->title}}</h5>
+                     <a href="https://amwcareerpoint.com/{{$collegePage->slug}}" class="btn btn-outline-warning w-100">Read More</a>
+                  </div>
+               </div>
+				@endforeach
+             
+
+            </div>
+
+
+         </div>
+
+   </div>
+</div>
+
+<div class="top-ranked-colleges py-100 pt-0 wow fadeInUp">
+   <div class="container">
+        <div class="title-seciton text-center py-3 py-lg-5 wow fadeInUp">
+            <h2 class="mb-3">Choose the Right Country for Your MBBS Journey</h2>
+            <div class="taketo-first">
+                <p class="text-center col-md-10 mx-auto">Compare, Evaluate, and Decide with Clarity</div>
+         </div>
+
+         <div class="step-today-section wow fadeInUp">
+            <div id="" class="show row g-4 college-show">
+               @foreach($videos as $key => $video)
+               <div class="col-md-3">
+                    {!!$video->testimonial!!}
+                </div>
+               @endforeach
+            </div>
+            @if($videos->count() > 4)
+            <div class="d-flex align-items-center justify-content-center mx-auto mt-5 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;" bis_skin_checked="1">
+			<a href="{{route('pages.videos')}}" class="btn btn-secondary cta-button" bis_skin_checked="1">View All</a>
+         </div>
+			@endif
+
+         </div>
+
+   </div>
+</div>
+
+<!--About us section start here-->
+<div class="about-us-section py-100 add-test">
+   <div class="container">
+   		@if(isset($section2->id))
+         <div class="row">
+             <div class="col-lg-6">
+                  <div class="about-left-img-section wow fadeInUp">
+                  	@if($section2->image != '')
+                    <img alt="" src="{{ asset('public/admin/images/banners/') }}/{{$section2->image}}" class="wow bounce bounce-slow-more"/>
+                    @endif
+                  </div>
+             </div>
+
+             <div class="col-lg-6">
+                  <div class="about-us-content wow fadeInUp">
+                        <div class="badge yellow-bedge">{!! $section2->title !!}</div>
+                        <h2 class="mb-4">{!! $section2->heading !!}</h2>
+                        <p class="mb-4">{!! $section2->description !!}</p>
+                        <a href="{{route('pages.about-us')}}" class="btn btn-primary cta-button">Read More</a>
+                  </div>
+             </div>
+         </div>
+		@endif
+         <div class="row">
+            <div class="col-lg-12 wow fadeInUp">
+               <div class="pt-100">
+                  <div class="our-milliion-seciton wow fadeInUp">
+                     <h5>Our Milestones and Achievements</h5>
+                     <div class="stats">
+                           <div class="stat">
+                              <h2 class="count" data-target="3500">0</h2>
+                              <p>Students Trained</p>
+                           </div>
+                           <div class="stat">
+                              <h2 class="count" data-target="2500">0</h2>
+                              <p>Admissions Secured</p>
+                           </div>
+                           <div class="stat">
+                              <div class="d-flex align-items-center">
+                                 <h2 class="count" data-target="100">0</h2>
+                                 <span class="count-per">%</span>
+                              </div>
+                              <p>Visa Success Rate (for Abroad Students)</p>
+                           </div>
+                     </div>
+
+                     <div class="achievments-img-section wow fadeInUp"><img alt="" src="{{ asset('public/img/our_milestones.svg') }}" class="wow animated2 bounce-slow-more"/></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+   </div>
+</div>
+<!--About us section end here-->
+
+<!--Ready to see you quailty section start here-->
+<div class="top-ranked-colleges py-100 pt-0 wow fadeInUp">
+   <div class="container">
+   		@if(isset($section3->id))
+        <div class="title-seciton text-center py-3 py-lg-5 wow fadeInUp">
+            <h2 class="mb-3">{!! $section3->title !!}</h2>
+            <div class="taketo-first">
+                <p class="text-center col-md-10 mx-auto">{!! $section3->description !!}</p>
+            </div>
+         </div>
+			@endif
+            
+         <div class="step-today-section wow fadeInUp">
+            <!-- Tabs -->
+            <div class="text-center d-flex align-items-center justify-content-center wow fadeInUp">
+               <div class="tab-btn mb-5">
+                  <button class="active" id="govt-tab">Government</button>
+                  <button id="private-tab">Private</button>
+                  <button id="abroad-tab">Abroad</button>
+               </div>
+            </div>
+
+            <!-- Government-College Cards -->
+            <div id="college-list" class="college-show row g-4">
+               @if(isset($gcolleges) && $gcolleges->count()>0)
+               @foreach($gcolleges as $key => $college)
+               @php
+                    $year = date('Y',strtotime($college->created_at));
+                    $month = date('m',strtotime($college->created_at));
+                    $dir = $year.'/'.$month;
+                @endphp
+               <div class="col-md-4">
+                  <div class="college-card h-100">
+                     <div class="d-flex justify-content-between align-items-center">
+                     	@if($college->logo != '')
+                        	<img src="{{URL::asset('public/admin/images/banners')}}/{!! $college->logo !!}" alt="college logo" title="">
+                        @else
+                        	<img src="{{URL::asset('public/images/no_img.jpg')}}" class="rounded-circle" alt="college logo" title="">
+                        @endif                        
+                        <div>
+                        <span class="star">
+                        	@for($i=1;$i<=$college->rating;$i++)
+                           <img src="{{ asset('public/img/star.svg') }}" alt="" title=""/>
+                           @endfor
+                        </span>
+                        </div>
+                     </div>
+                     <a href="{{url('college',$college->slug)}}"><h5 class="mt-3">{{$college->name}}</h5></a>
+                     <p class="mb-4">{{getDetails('states',$college->state,'state')}}</p>
+                     @if($college->description != '')
+                     	<p>{{substr(strip_tags($college->description),0,70)}}...</p>
+                     @endif                     
+                     <a href="{{url('college',$college->slug)}}" class="btn btn-outline-warning mt-4 w-100">College Details</a>
+                  </div>
+               </div>
+               @endforeach
+               @endif                              
+          	</div>
+
+            <!-- Private-College Cards -->
+            <div id="college-list-priv" class="row g-4 ">
+               
+               @if(isset($pcolleges) && $pcolleges->count()>0)
+               @foreach($pcolleges as $key => $college)
+               @php
+                    $year = date('Y',strtotime($college->created_at));
+                    $month = date('m',strtotime($college->created_at));
+                    $dir = $year.'/'.$month;
+                @endphp
+               <div class="col-md-4">
+                  <div class="college-card h-100">
+                     <div class="d-flex justify-content-between align-items-center">
+                     	@if($college->logo != '')
+                        	<img src="{{URL::asset('public/admin/images/banners')}}/{!! $college->logo !!}" alt="college logo" title="">
+                        @else
+                        	<img src="{{URL::asset('public/images/no_img.jpg')}}" class="rounded-circle" alt="college logo" title="">
+                        @endif                        
+                        <div>
+                        <span class="star">
+                        	@for($i=1;$i<=$college->rating;$i++)
+                           <img src="{{ asset('public/img/star.svg') }}" alt="" title=""/>
+                           @endfor
+                        </span>
+                        </div>
+                     </div>
+                    <a href="{{url('college',$college->slug)}}"><h5 class="mt-3">{{$college->name}}</h5></a>
+                     <p class="mb-4">{{getDetails('states',$college->state,'state')}}</p>
+                     @if($college->description != '')
+                     	<p>{{substr(strip_tags($college->description),0,70)}}...</p>
+                     @endif                     
+                     <a href="{{url('college',$college->slug)}}" class="btn btn-outline-warning mt-4 w-100">College Details</a>
+                  </div>
+               </div>
+               @endforeach
+               @endif
+
+            </div>
+            
+            <!-- Private-College Cards -->
+            <div id="college-list-abroad" class="row g-4 ">
+               
+               @if(isset($acolleges) && $acolleges->count()>0)
+               @foreach($acolleges as $key => $college)
+               @php
+                    $year = date('Y',strtotime($college->created_at));
+                    $month = date('m',strtotime($college->created_at));
+                    $dir = $year.'/'.$month;
+                @endphp
+               <div class="col-md-4">
+                  <div class="college-card h-100">
+                     <div class="d-flex justify-content-between align-items-center">
+                     	@if($college->logo != '')
+                        	<img src="{{URL::asset('public/admin/images/banners')}}/{!! $college->logo !!}" alt="college logo" title="">
+                        @else
+                        	<img src="{{URL::asset('public/images/no_img.jpg')}}" class="rounded-circle" alt="college logo" title="">
+                        @endif                        
+                        <div>
+                        <span class="star">
+                        	@for($i=1;$i<=$college->rating;$i++)
+                           <img src="{{ asset('public/img/star.svg') }}" alt="" title=""/>
+                           @endfor
+                        </span>
+                        </div>
+                     </div>
+                     <a href="{{url('college',$college->slug)}}"><h5 class="mt-3">{{$college->name}}</h5></a>
+                     <p class="mb-4">{{getDetails('states',$college->state,'state')}} {{getDetails('countries',$college->country,'title')}}</p>
+                     @if($college->description != '')
+                     	<p>{{substr(strip_tags($college->description),0,70)}}...</p>
+                     @endif                     
+                     <a href="{{url('college',$college->slug)}}" class="btn btn-outline-warning mt-4 w-100">College Details</a>
+                  </div>
+               </div>
+               @endforeach
+               @endif
+
+            </div>
+         </div>
+
+         <div class="d-flex align-items-center justify-content-center mx-auto mt-5 wow fadeInUp">
+			<a href="{{route('pages.predictors')}}" class="btn btn-primary cta-button me-4">Use College Predictor</a>
+			<a href="{{route('pages.colleges')}}" class="btn btn-secondary cta-button">View All Colleges</a>
+         </div>
+
+   </div>
+</div>
+<!--Ready to see you quailty section end here-->
+
+
+@include('element.section1')
+
+
+@include('element.section2')
+
+
+@include('element.testimonials')
+
+
+@include('element.faq')
+
+
+@include('element.blogs')
+
+
+@include('element.contact_us2')       
+
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('.numberonly').keypress(function(e){
+			var charCode = (e.which) ? e.which : event.keyCode
+			if(String.fromCharCode(charCode).match(/[^0-9+]/g))
+			return false;
+		});
+    });	
+	
+</script>
+
+@endsection
